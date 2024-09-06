@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-This is where my blog post will be.
+<div>
+{% for post in post %}
+{% if post is defined %}
+<h2> {{ post.title }} </p>
+<p> {{ post.content }} </p>
+{% else %}
+<p> No post yet </p>
+{% endif %}
+{% endfor %}
+</div>
 {% endblock %}

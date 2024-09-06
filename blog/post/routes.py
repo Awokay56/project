@@ -1,7 +1,25 @@
 from blog.post import bp
-
-from flask import render_template
+from blog.extensions import db
+from flask import (render_template, redirect,
+                   url_for, request)
+from blog.models.post import Post
 
 @bp.route('/blog')
 def blog():
-    return (render_template(('post/index.html')))
+    post = Post.query.all()
+    return (render_template('post/index.html', post=post))
+
+@bp.route('/create', methods=('GET', 'POST'))
+def create():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+
+        post = Post(title=title,
+                    content=content)
+
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('post.blog'))   
+    return(render_template('post/create_post.html'))
+ 
