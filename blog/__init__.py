@@ -1,6 +1,6 @@
 from flask import Flask
 from config import Config
-from blog.extensions import db
+from blog.extensions import db, ckeditor
 
 
 def create_app(config_class=Config):
@@ -9,6 +9,7 @@ def create_app(config_class=Config):
 
     # Initialize flask extensions
     db.init_app(app)
+    ckeditor.init_app(app)
 
     # Registering blueprints
     from blog.main import bp as main_bp

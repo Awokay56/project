@@ -1,14 +1,29 @@
 {% extends 'base.html' %}
 
+{% block head %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='post/index.css') }}">
+{% endblock %}
+
 {% block content %}
-<div>
-{% for post in post %}
-{% if post is defined %}
-<h2> {{ post.title }} </p>
-<p> {{ post.content }} </p>
-{% else %}
-<p> No post yet </p>
-{% endif %}
-{% endfor %}
+<div class="blog-container">
+    {% for post in post %}
+    {% if post is defined %}
+    <div class="post-card">
+        <div class="post-header">
+            <h2><a href ="{{ url_for('post.title',title=post.title) }}">{{ post.title }}</a></h2>
+        </div>
+        <div class="post-body">
+            <p>{{ post.content | safe }}</p>
+        </div>
+        <div class="post-footer">
+                <div class="post-details">
+                <span>{{ post.created_at }}</span>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>No post yet</p>
+    {% endif %}
+    {% endfor %}
 </div>
 {% endblock %}
